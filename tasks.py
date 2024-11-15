@@ -15,3 +15,11 @@ app = Celery('tasks', broker=f'pyamqp://{RABBITMQ_USERNAME}:{RABBITMQ_PASSWORD}@
 @app.task
 def add(x, y):
     return x + y
+
+# celery_app/tasks.py
+from celery import shared_task
+
+@shared_task
+def my_task():
+    print("Задача выполнена!")
+    return "Задача завершена"
