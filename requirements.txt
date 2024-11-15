@@ -1,2 +1,4 @@
-celery~=5.3.6
+celery~=5.4.0
 python-dotenv~=1.0.1
+redis==5.1.1  # Если используете Redis как брокер
+
