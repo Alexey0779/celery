@@ -10,7 +10,7 @@ import os
 # from shop.set_data_to_db.set_products import acreate_products
 import logging
 
-from shop.set_data_to_db.set_sales import save_sales_data
+# from shop.set_data_to_db.set_sales import save_sales_data
 
 load_dotenv()
 
