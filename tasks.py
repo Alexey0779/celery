@@ -2,6 +2,15 @@ from celery import Celery
 from dotenv import load_dotenv
 from celery import shared_task
 import os
+# from django.contrib.auth.models import User
+# from shop.get_data_from_wb.get_fin_report import zapros_finreport
+# from shop.get_data_from_wb.get_product import zapros_product, zapros_product_deleted
+# from shop.get_data_from_wb.get_sales import zapros_sale, initial_load_sales
+# from shop.models import user_tarif, Apisales, ApiToken
+# from shop.set_data_to_db.set_products import acreate_products
+import logging
+
+from shop.set_data_to_db.set_sales import save_sales_data
 
 load_dotenv()
 
@@ -16,6 +25,8 @@ redis_url = f'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT
 # Инициализация объекта Celery с использованием Redis как брокера
 app = Celery('tasks', broker=redis_url)
 
+logger = logging.getLogger(__name__)
+
 @app.task
 def add(x, y):
     return x + y
@@ -28,23 +39,6 @@ def my_task():
     print("Задача выполнена!")
     return "Задача завершена"
 
-from celery import shared_task
-from django.contrib.auth.models import User
-
-from shop.get_data_from_wb.get_fin_report import zapros_finreport
-from shop.get_data_from_wb.get_product import zapros_product, zapros_product_deleted
-from shop.get_data_from_wb.get_sales import zapros_sale, initial_load_sales
-from shop.models import user_tarif, Apisales, ApiToken
-from shop.set_data_to_db.set_products import acreate_products
-import logging
-
-from shop.set_data_to_db.set_sales import save_sales_data
-
-logger = logging.getLogger(__name__)
-
-
-
-# from .models import user_tarif  # Импортируйте вашу модель
 
 @shared_task
 def update_data_from_api(user_id):
